@@ -1,0 +1,27 @@
+eureka:
+  instance:
+    hostname: localhost
+    leaseRenewalIntervalInSeconds: 10
+    health-check-url-path: /actuator/health
+    metadata-map:
+      startup: ${random.int}    #needed to trigger info and endpoint update after restart
+  client:
+    serviceUrl:
+      defaultZone: ${DISCOVERY_URL:http://localhost:8761}/eureka/
+    register-with-eureka: false
+
+logging:
+  pattern:
+    file: "%-5level - %replace(%msg){'[\r\n]', ''}%n"
+    console: "%-5level - %replace(%msg){'[\r\n]', ''}%n"
+  level:
+    org.springframework: INFO
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
